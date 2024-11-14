@@ -197,19 +197,20 @@ const { updates } = await aggregator.fetchUpdate(signerAddress);
 
 // Create a transaction to run the feed update
 const updateTx = await switchboardClient.aptos.transaction.build.simple({
-  payload: {
+  sender: singerAddress,
+  data: {
     function: `${exampleAddress}::switchboard_example::my_function`,
     functionArguments: [updates],
   },
 });
 
-console.log("Fetch Update Oracle Response: ", response);
-
+// Sign and submit the transaction
 const res = await aptos.signAndSubmitTransaction({
   signer: account,
   transaction: updateTx,
 });
 
+// Wait for the transaction to complete
 const result = await aptos.waitForTransaction({
   transactionHash: res.hash,
   options: {
