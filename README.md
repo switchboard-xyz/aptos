@@ -135,9 +135,6 @@ const queue = isMainnet
 // Store some job definition
 const { feedHash } = await crossbarClient.store(queue, jobs);
 
-// Create a SwitchboardClient using the aptos client configured with your favorite RPC on testnet or mainnet
-const sb = new SwitchboardClient(suiClient);
-
 // try creating a feed
 const feedName = "BTC/USDT";
 
@@ -157,7 +154,12 @@ const minJobResponses = 1;
 // Feed Initialization On-Chain
 //==========================================================
 
-const aggregatorInitTx = await Aggregator.initTx(client, signer, {
+// ... get the account object for your signer with relevant key / address ...
+
+// get the signer address
+const signerAddress = account.accountAddress.toString();
+
+const aggregatorInitTx = await Aggregator.initTx(client, signerAddress, {
   name: feedName,
   minSampleSize,
   maxStalenessSeconds,
