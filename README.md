@@ -187,8 +187,6 @@ console.log(result);
 
 ## Updating Feeds
 
-With Switchboard On-Demand, passing the PTB (proof-to-be) into the feed update method handles the update automatically.
-
 ```typescript
 const aggregator = new Aggregator(sb, aggregatorId);
 
@@ -222,5 +220,3 @@ const result = await aptos.waitForTransaction({
 // Log the transaction results
 console.log(result);
 ```
-
-Note: Ensure the Switchboard Aggregator update is the first action in your PTB or occurs before referencing the feed update.
