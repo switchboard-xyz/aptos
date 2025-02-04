@@ -58,7 +58,7 @@ const aggregator = new Aggregator(
 );
 
 // Fetch and log the oracle responses
-const { updates } = await aggregator.fetchUpdate(signer);
+const { updates } = await aggregator.fetchUpdate();
 
 // Create a transaction to run the feed update
 const updateTx = await client.aptos.transaction.build.simple({

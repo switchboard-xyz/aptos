@@ -191,7 +191,7 @@ console.log(result);
 const aggregator = new Aggregator(sb, aggregatorId);
 
 // Fetch and log the oracle responses
-const { updates } = await aggregator.fetchUpdate(signerAddress);
+const { updates } = await aggregator.fetchUpdate();
 
 // Create a transaction to run the feed update
 const updateTx = await switchboardClient.aptos.transaction.build.simple({
