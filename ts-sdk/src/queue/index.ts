@@ -1,4 +1,9 @@
-import type { CommonOptions, OracleData, SwitchboardClient } from "../index.js";
+import {
+  hexToB58,
+  type CommonOptions,
+  type OracleData,
+  type SwitchboardClient,
+} from "../index.js";
 import { SimpleTransaction } from "@aptos-labs/ts-sdk";
 import { bs58 } from "@switchboard-xyz/common";
 
@@ -230,13 +235,18 @@ export class Queue {
 
     const resource = resources[0] as any;
 
+    let queueKey = hexToB58(resource.queue_key);
+
     // parse the data into the correct types
     const data: QueueData = {
       authority: resource.authority,
-      existingOracles: resource.all_oracles.map((o: any) => ({
-        oracle: o.oracle,
-        oracleKey: bs58.encode(Buffer.from(o.oracle_key.slice(2), "hex")),
-      })),
+      existingOracles: resource.all_oracles.map((o: any) => {
+        let key = hexToB58(o.oracle_key);
+        return {
+          oracle: o.oracle,
+          oracleKey: key,
+        };
+      }),
       fee: parseInt(resource.fee),
       feeRecipient: resource.fee_recipient,
       feeTypes: resource.fee_types.map((ft: any) => this.formatType(ft)),
@@ -246,7 +256,7 @@ export class Queue {
       minAttestations: parseInt(resource.min_attestations),
       name: resource.name,
       oracleValidityLength: parseInt(resource.oracle_validity_length),
-      queueKey: bs58.encode(Buffer.from(resource.queue_key.slice(2), "hex")),
+      queueKey,
     };
 
     return data;
@@ -268,15 +278,16 @@ export class Queue {
     const resources = resourcesResponse[0] as any;
 
     const oracles: OracleData[] = resources.map((resource: any) => {
+      let oracleKey = hexToB58(resource.oracle_key);
+      let queueKey = hexToB58(resource.queue_key);
+
       return {
         expirationTime: parseInt(resource.expiration_time),
         address: resource.oracle_address,
         mrEnclave: resource.mr_enclave,
-        oracleKey: bs58.encode(
-          Buffer.from(resource.oracle_key.slice(2), "hex")
-        ),
+        oracleKey,
         queue: resource.queue,
-        queueKey: bs58.encode(Buffer.from(resource.queue_key.slice(2), "hex")),
+        queueKey,
         secp256k1Key: resource.secp256k1_key,
         validAttestations: resource.valid_attestations,
       };

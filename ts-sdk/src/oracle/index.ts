@@ -1,7 +1,4 @@
-import {
-  SwitchboardClient,
-  CommonOptions,
-} from "../index.js";
+import { SwitchboardClient, CommonOptions } from "../index.js";
 import { SimpleTransaction } from "@aptos-labs/ts-sdk";
 
 export interface OracleInitParams extends CommonOptions {

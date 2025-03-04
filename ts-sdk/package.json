@@ -1,6 +1,6 @@
 {
   "name": "@switchboard-xyz/aptos-sdk",
-  "version": "0.0.3",
+  "version": "0.0.8",
   "description": "API wrapper for intergating with the Switchboard program on our Aptos implementation",
   "license": "MIT",
   "type": "module",
@@ -30,8 +30,8 @@
     "@aptos-labs/ts-sdk": "^1.33.1",
     "@brokerloop/ttlcache": "^3.2.3",
     "@coral-xyz/anchor": "0.30.1",
-    "@switchboard-xyz/common": "^2.5.12",
-    "@switchboard-xyz/on-demand": "^1.2.58",
+    "@switchboard-xyz/common": "^2.5.18",
+    "@switchboard-xyz/on-demand": "^1.2.64",
     "@thalalabs/surf": "^1.7.3",
     "axios": "^1.7.9",
     "bn.js": "^5.2.1"

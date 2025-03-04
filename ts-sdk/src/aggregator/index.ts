@@ -1,5 +1,10 @@
 import type { CommonOptions, SwitchboardClient } from "../index.js";
-import { aptosQueueCache, Queue, solanaProgramCache } from "../index.js";
+import {
+  aptosQueueCache,
+  hexToB58,
+  Queue,
+  solanaProgramCache,
+} from "../index.js";
 
 import type { SimpleTransaction } from "@aptos-labs/ts-sdk";
 import { AccountAddress, APTOS_COIN } from "@aptos-labs/ts-sdk";
@@ -321,18 +326,15 @@ export class Aggregator {
 
       // filter out responses that don't have available oracles
       const validResponses = responses.filter((r) => {
-        return validOracles.has(
-          bs58.encode(Buffer.from(r.oracle_pubkey, "hex"))
-        );
+        let key = hexToB58(r.oracle_pubkey) && r.success_value;
+        return validOracles.has(key);
       });
 
-      // if we have no valid responses (or not enough), fail out
-      if (
-        !validResponses.length ||
-        validResponses.length < feedConfigs.minSampleSize
-      ) {
-        // maybe retry by recursing into the same function / add a retry count
-        throw new Error("Not enough valid oracle responses.");
+      if (!validResponses.length) {
+        let failures = Array.from(
+          new Set(responses.map((r) => r.failure_error).filter(Boolean))
+        ).join(", ");
+        throw new Error(`No valid responses found. Failures: ${failures}`);
       }
 
       // update strings to build the single update string
@@ -340,10 +342,9 @@ export class Aggregator {
 
       // map the responses into the tx
       for (const response of validResponses) {
+        let key = hexToB58(response.oracle_pubkey);
         const oracle = aptosQueue.existingOracles.find(
-          (o) =>
-            o.oracleKey ===
-            bs58.encode(Buffer.from(response.oracle_pubkey, "hex"))
+          (o) => o.oracleKey === key
         );
 
         if (!oracle) {
@@ -448,7 +449,7 @@ export class Aggregator {
 
     // fail out if we can't fetch the update data
     if (!fetchUpdateDataResponse) {
-      throw new Error("Failed to fetch update data");
+      throw new Error("Failed to fetch update data. Not enough responses.");
     }
 
     // return the response
