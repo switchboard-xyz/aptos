@@ -3,7 +3,7 @@
     <img src="https://github.com/switchboard-xyz/sbv2-core/raw/main/website/static/img/icons/switchboard/avatar.png" />
   </a>
 
-  <h1>Switchboard</h1>
+  <h1>Aptos On-Demand Integration</h1>
 
   <p>Switchboard is a multi-chain, permissionless oracle protocol allowing developers to fully control how data is relayed on-chain to their smart contracts.</p>
 
@@ -20,12 +20,6 @@
     <strong>Documentation: </strong><a href="https://docs.switchboard.xyz">docs.switchboard.xyz</a>
   </h4>
 </div>
-
-# Aptos On-Demand Integration
-
-**DISCLAIMER: SWITCHBOARD ON-DEMAND FOR APTOS IS CURRENTLY UNDERGOING AUDIT. USE AT YOUR OWN RISK.**
-
-# Switchboard On-Demand Integration Guide
 
 This guide covers the setup and use of Switchboard data feeds within your project, using the `Aggregator` module for updating feeds and integrating `Switchboard` in Move.
 
@@ -243,3 +237,5 @@ const result = await aptos.waitForTransaction({
 // Log the transaction results
 console.log(result);
 ```
+
+**DISCLAIMER: SWITCHBOARD ON-DEMAND FOR APTOS IS CURRENTLY UNDERGOING AUDIT. USE AT YOUR OWN RISK.**
