@@ -221,16 +221,6 @@ module switchboard_adapter::aggregator {
         let (value, neg) = decimal::unpack(result);
         let value_sbd = math::new(value / 1000000000, 9, neg);
 
-        // get the timestamp
-        let timestamp_seconds = on_demand_aggregator::timestamp(&current_result);
-        
-        // check if the timestamp is old
-        let current_time = timestamp::now_seconds();
-        let is_old = current_time - timestamp_seconds > 120;
-
-        // error out if the data is older than 2 minutes
-        assert!(!is_old, errors::PermissionDenied());
-
         // get the latest value and whether it's within the bounds
         value_sbd
     }
