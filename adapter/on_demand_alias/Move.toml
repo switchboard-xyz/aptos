@@ -1,0 +1,18 @@
+[package]
+name = "SwitchboardOnDemandAdapter"
+version = "0.0.1"
+
+[addresses]
+std = '0x1'
+aptos_framework = '0x1'
+switchboard = "0xfea54925b5ac1912331e2e62049849b37842efaea298118b66f85a59057752b8"
+on_demand_adapter = "_"
+
+[dev-addresses]
+on_demand_adapter = '0x55'
+
+[dependencies]
+MoveStdlib = { git = "https://github.com/aptos-labs/aptos-core.git", subdir = "aptos-move/framework/move-stdlib/", rev = "mainnet" }
+AptosFramework = { git = "https://github.com/aptos-labs/aptos-core.git", subdir = "aptos-move/framework/aptos-framework/", rev = "mainnet" }
+AptosStdlib = { git = "https://github.com/aptos-labs/aptos-core.git", subdir = "aptos-move/framework/aptos-stdlib/", rev = "mainnet" }
+Switchboard = { git = "https://github.com/switchboard-xyz/aptos.git", rev = "main", subdir = "on_demand"}
