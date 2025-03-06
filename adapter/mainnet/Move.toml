@@ -3,13 +3,13 @@ name = "SwitchboardAdapter"
 version = "0.0.1"
 
 [addresses]
-std = '0x1'
-aptos_framework = '0x1'
-switchboard = "0x4fc1809ffb3c5ada6b4e885d4dbdbeb70cbdd99cbc0c8485965d95c2eab90935"
 switchboard_adapter = "_"
+std = "0x1"
+aptos_framework = "0x1"
+switchboard = "0xfea54925b5ac1912331e2e62049849b37842efaea298118b66f85a59057752b8"
 
 [dev-addresses]
-switchboard_adapter = '0x55'
+switchboard_adapter = "0x55"
 
 [dependencies]
 MoveStdlib = { git = "https://github.com/aptos-labs/aptos-core.git", subdir = "aptos-move/framework/move-stdlib/", rev = "mainnet" }
