@@ -1,4 +1,4 @@
-module on_demand_adapter::vec_utils {
+module switchboard_adapter::vec_utils {
     use std::option::{Self, Option};
     use std::vector;
 

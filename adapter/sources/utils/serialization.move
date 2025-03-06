@@ -1,5 +1,5 @@
-module on_demand_adapter::serialization {
-    use on_demand_adapter::math::{Self, SwitchboardDecimal};
+module switchboard_adapter::serialization {
+    use switchboard_adapter::math::{Self, SwitchboardDecimal};
     use std::vector;
     use aptos_std::ed25519::{Self, Signature, UnvalidatedPublicKey};
     use aptos_std::from_bcs;    

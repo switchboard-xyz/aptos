@@ -1,4 +1,4 @@
-module on_demand_adapter::errors {
+module switchboard_adapter::errors {
     use std::error;
     // https://github.com/aptos-labs/aptos-core/blob/main/aptos-move/framework/move-stdlib/sources/error.move
     

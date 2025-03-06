@@ -1,5 +1,5 @@
-module on_demand_adapter::math {
-    use on_demand_adapter::vec_utils;
+module switchboard_adapter::math {
+    use switchboard_adapter::vec_utils;
     use std::vector;
     use std::error;
 
