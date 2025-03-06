@@ -236,4 +236,96 @@ const result = await aptos.waitForTransaction({
 console.log(result);
 ```
 
+## Migrating existing code to On-Demand from V2 without updating logic
+
+### 1. Update Move.toml
+
+You'll need to update your `Move.toml` to include the new `switchboard_adapter` module and address. Replace the `switchboard` named address with the new `switchboard_adapter` address.
+
+```diff
+[addresses]
+
+# remove the switchboard address
+- switchboard = "0xb91d3fef0eeb4e685dc85e739c7d3e2968784945be4424e92e2f86e2418bf271"
+
+# add the switchboard_adapter address
++ switchboard_adapter = "0x890fd4ed8a26198011e7923f53f5f1e5eeb2cc389dd50b938f16cb95164dc81c"
+
+[dependencies]
+
+# remove the switchboard v2 dependency
+- [dependencies.Switchboard]
+- git = "https://github.com/switchboard-xyz/sbv2-aptos.git"
+- subdir = "move/switchboard/testnet/" # change to /mainnet/ if on mainnet - or fork and change deps for a specific commit hash
+- rev = "main"
+
+# add the on-demand adapter dependency
++ [dependencies.SwitchboardAdapter]
++ git = "https://github.com/switchboard-xyz/aptos.git"
++ subdir = "adapter/mainnet"
++ rev = "main"
+```
+
+### 2. Update your Move Modules
+
+You'll need to update named address `switchboard` to `switchboard_adapter` in dependencies.
+
+```diff
+module example::module {
+-    use switchboard::aggregator;
+-    use switchboard::math;
++    use switchboard_adapter::aggregator;
++    use switchboard_adapter::math;
+    ...
+}
+```
+
+The aggregator addresses you use will have to be updated to new On-Demand Aggregators that can be created from your V2 Aggregators on the Switchboard On-Demand App. Update references in your application to on-demand aggregators accordingly.
+
+### 3. Cranking
+
+On-demand works on a pull-based mechanism, so you will have to crank feeds with your client-side code in order to get the latest data. This can be done using the Typescript SDK.
+
+```typescript
+import {
+  Aggregator,
+  SwitchboardClient,
+  waitForTx,
+} from "@switchboard-xyz/aptos-sdk";
+import { Account, Aptos, AptosConfig, Network } from "@aptos-labs/ts-sdk";
+
+// get the aptos client
+const config = new AptosConfig({
+  network: Network.MAINNET, // network a necessary param / if not passed in, full node url is required
+});
+const aptos = new Aptos(config);
+
+// create a SwitchboardClient using the aptos client
+const client = new SwitchboardClient(aptos);
+
+const aggregator = new Aggregator(sb, aggregatorId);
+
+// update the aggregator every 10 seconds
+setInterval(async () => {
+  try {
+    // fetch the latest update and tx to update the aggregator
+    const { updateTx } = await aggregator.fetchUpdate({
+      sender: signerAddress,
+    });
+
+    // send the tx to update the aggregator
+    const tx = await aptos.signAndSubmitTransaction({
+      signer: account,
+      transaction: updateTx,
+    });
+    const resultTx = await waitForTx(aptos, tx.hash);
+    console.log(`Aggregator ${aggregatorId} updated!`);
+  } catch (e) {
+    console.error(`Error updating aggregator ${aggregatorId}: ${e}`);
+  }
+}, 10000);
+```
+
+---
+
 **DISCLAIMER: SWITCHBOARD ON-DEMAND FOR APTOS IS CURRENTLY UNDERGOING AUDIT. USE AT YOUR OWN RISK.**
