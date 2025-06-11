@@ -54,13 +54,12 @@ console.log("Switchboard address:", switchboardAddress);
 
 const aggregator = new Aggregator(
   client,
-  "0xff75f54a95f6099e5b18a3fdd4801b723b92d657f9640df4b198fb27fa5de89e"
+  "0x86252100b1050c2e97178ac9c01216a4d70f99d1dbccad1224280b3f378697d3"
 );
 
 // Fetch and log the oracle responses
-const { updates, failures } = await aggregator.fetchUpdate();
+const { updates } = await aggregator.fetchUpdate();
 
-console.log("Failures:", failures);
 
 // Create a transaction to run the feed update
 const updateTx = await client.aptos.transaction.build.simple({
