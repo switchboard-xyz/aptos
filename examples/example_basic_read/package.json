@@ -9,7 +9,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "@aptos-labs/ts-sdk": "^1.32.1",
-    "@switchboard-xyz/aptos-sdk": "^0.0.5"
+    "@aptos-labs/ts-sdk": "^2.0.1",
+    "@switchboard-xyz/aptos-sdk": "^0.1.1"
   }
 }

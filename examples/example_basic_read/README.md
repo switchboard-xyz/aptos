@@ -22,12 +22,12 @@ bun install
 
 #### build
 ```bash
-aptos move compile --named-addresses example_basic_read=$DEPLOYER_ADDRESS
+aptos move compile --named-addresses example=$DEPLOYER_ADDRESS
 ```
 
 #### deploy
 ```bash
-aptos move deploy-object --address-name example_basic_read
+aptos move deploy-object --address-name example
 ```
 
 ### 1. Configure the Script

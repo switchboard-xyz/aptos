@@ -54,23 +54,25 @@ console.log("Switchboard address:", switchboardAddress);
 
 const aggregator = new Aggregator(
   client,
-  "0x4bac6bbbecfe7be5298358deaf1bf2da99c697fea16a3cf9b0e340cb557b05a8"
+  "0xff75f54a95f6099e5b18a3fdd4801b723b92d657f9640df4b198fb27fa5de89e"
 );
 
 // Fetch and log the oracle responses
-const { updates } = await aggregator.fetchUpdate();
+const { updates, failures } = await aggregator.fetchUpdate();
+
+console.log("Failures:", failures);
 
 // Create a transaction to run the feed update
 const updateTx = await client.aptos.transaction.build.simple({
   sender: signer,
   data: {
-    function: `0x49c02736ed2eb65bb428c5e233e4ae51b11d11af8aa520bda223e2f9609326fd::example_basic_read::update_and_read_feed`,
-    functionArguments: [updates],
+    function: `0xcd4f9302fa687337d1e7a25f5b378aff941ceda8f2a8f76e2cef62c2d13bfdb3::example_basic_read::update_and_read_feed`,
+    functionArguments: [updates, aggregator.address],
   },
 });
 
 const res = await aptos.signAndSubmitTransaction({
-  signer: account,
+  signer: account, 
   transaction: updateTx,
 });
 

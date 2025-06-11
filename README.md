@@ -26,7 +26,7 @@
 The Switchboard On-Demand service is currently deployed on the following networks:
 
 - Mainnet: [0xfea54925b5ac1912331e2e62049849b37842efaea298118b66f85a59057752b8](https://explorer.aptoslabs.com/object/0xfea54925b5ac1912331e2e62049849b37842efaea298118b66f85a59057752b8/modules/code/aggregator?network=mainnet)
-- Testnet: [0x81fc6bbc64b7968e631b2a5b3a88652f91a617534e3755efab2f572858a30989](https://explorer.aptoslabs.com/object/0x4fc1809ffb3c5ada6b4e885d4dbdbeb70cbdd99cbc0c8485965d95c2eab90935/modules/code/aggregator?network=testnet)
+- Testnet: [0x4fc1809ffb3c5ada6b4e885d4dbdbeb70cbdd99cbc0c8485965d95c2eab90935](https://explorer.aptoslabs.com/object/0x4fc1809ffb3c5ada6b4e885d4dbdbeb70cbdd99cbc0c8485965d95c2eab90935/modules/code/aggregator?network=testnet)
 
 ## Typescript-SDK Installation
 
@@ -58,7 +58,7 @@ To integrate Switchboard with Move, add the following dependencies to Move.toml:
 [dependencies.Switchboard]
 git = "https://github.com/switchboard-xyz/aptos.git"
 subdir = "on_demand/"
-rev = "mainnet" # testnet or mainnet
+rev = "main"
 ```
 
 ## Example Move Code for Using Switchboard Values

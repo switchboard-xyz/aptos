@@ -16,13 +16,13 @@ module example::example_basic_read {
     public entry fun update_and_read_feed(
         account: &signer,
         update_data: vector<vector<u8>>,
+        aggregator_address: address,
     ) {
-        
         // Update the feed with the provided data
         update_action::run<AptosCoin>(account, update_data);
 
         // Get the feed object - here it's testnet BTC/USD
-        let aggregator: address = @0x4bac6bbbecfe7be5298358deaf1bf2da99c697fea16a3cf9b0e340cb557b05a8;
+        let aggregator: address = aggregator_address;
         let aggregator: Object<Aggregator> = object::address_to_object<Aggregator>(aggregator);
 
         // Get the latest update info for the feed
