@@ -585,6 +585,21 @@ module switchboard::aggregator {
         aggregator_address
     }
 
+    #[test_only]
+    public fun set_current_result(aggregator: Object<Aggregator>, result: Decimal, timestamp: u64) acquires CurrentResult {
+        let current_result_address = object::object_address(&aggregator);
+        let current_result = borrow_global_mut<CurrentResult>(current_result_address);
+        current_result.result = result;
+        current_result.timestamp = timestamp;
+        current_result.min_timestamp = timestamp;
+        current_result.max_timestamp = timestamp;
+        current_result.min_result = result;
+        current_result.max_result = result;
+        current_result.stdev = decimal::new(0, false);
+        current_result.range = decimal::new(0, false);
+        current_result.mean = result;
+    }
+
     #[test(account = @0x1)]
     public fun test_aggregator_accessors(account: signer) acquires Aggregator {
         let err = 1337;
@@ -734,7 +749,7 @@ module switchboard::aggregator {
         assert!(mean(&current_result) == decimal::new(expected_mean, false), decimal::value(&mean(&current_result)) as u64);
     }
 
-        #[test(account = @0x1)]
+    #[test(account = @0x1)]
     public fun test_aggregator_updates_small(account: signer) acquires Aggregator, UpdateState, CurrentResult {
         let err: u64 = 1337;
         let queue_address = example_queue_address();
